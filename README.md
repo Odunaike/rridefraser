@@ -4,7 +4,7 @@ This a two-page flutter application that implements a user authentication flow u
 
 Packages Used
 - http (https://pub.dev/packages/http): This package handles the network requests to login and request products
-- shared_preferences (https://pub.dev/packages/shared_preferences): On successful login, the access token is stored on the device
+- shared_preferences (https://pub.dev/packages/shared_preferences): On successful login, the access token is stored on the device using shared preferences
 - bloc (https://pub.dev/packages/flutter_bloc): This package handled all the states in the application. From loading to error handling, it updates the UI of the right states to display
 - shimmer (https://pub.dev/packages/shimmer): This package is used to create a loading effect when requesting the products' list
 
