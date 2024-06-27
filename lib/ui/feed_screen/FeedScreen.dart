@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,10 @@ class FeedScreen extends StatelessWidget {
       if (state is LoginCompletedState) {
         return const Center(child: ShimmerList());
       } else if (state is LoginRetrieveState) {
-        return ProductList(productsList: state.products);
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ProductList(productsList: state.products),
+        );
       } else if (state is LoginFailedState) {
         //Navigator.pop(context);
         return Center(
@@ -34,29 +38,40 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(
-          height: 50,
+    Product topProduct = productsList[0];
+    List<Product> subListProducts = productsList.sublist(1);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const SizedBox(
+        height: 50,
+      ),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(
+          "Hey User,",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            "Hey User,",
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-          ),
+      ),
+      ProductItem(product: topProduct),
+      const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          "Trending",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        Expanded(
+      ),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: ListView.builder(
-            itemCount: productsList.length,
+            scrollDirection: Axis.horizontal,
+            itemCount: subListProducts.length,
             itemBuilder: (context, index) {
-              return ProductItem(product: productsList[index]);
+              return ProductItemRow(product: subListProducts[index]);
             },
           ),
         ),
-      ],
-    );
+      ),
+    ]);
   }
 }
 
@@ -83,7 +98,7 @@ class ProductItem extends StatelessWidget {
           ),
           Text(
             product.name,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 8,
@@ -94,8 +109,49 @@ class ProductItem extends StatelessWidget {
           ),
           Text(
             "\$${product.price}",
-            style: const TextStyle(
-                color: Color.fromARGB(255, 30, 176, 61), fontSize: 16),
+            style: const TextStyle(color: Color(0xFF5DB075), fontSize: 16),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ProductItemRow extends StatelessWidget {
+  final Product product;
+  const ProductItemRow({Key? key, required this.product}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 124,
+      height: 215,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(product.imageUrls[0],
+                fit: BoxFit.cover, width: 110, height: 110),
+          ),
+          SizedBox(
+            height: 34,
+            width: 110,
+            child: Text(
+              product.name,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            ),
+          ),
+          SizedBox(
+            height: 17,
+            width: 48,
+            child: Text(
+              "\$${product.price}",
+              style: const TextStyle(
+                  color: Color(0xFF5DB075),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+            ),
           )
         ],
       ),

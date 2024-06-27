@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   backgroundColor: Colors.transparent,
                   child: Center(
                       child: CircularProgressIndicator(
-                    color: Color.fromARGB(255, 55, 237, 91),
+                    color: Color(0xFF5DB075),
                   )),
                 );
               },
@@ -55,110 +55,131 @@ class _LoginScreenState extends State<LoginScreen> {
           } else {}
         },
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Form(
-              key: _formKey,
-              child: Column(children: [
-                const Row(
-                  children: [
-                    Text(
-                      textAlign: TextAlign.start,
-                      "Login to your account",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  color: const Color.fromARGB(255, 244, 244, 244),
-                  child: TextFormField(
-                    controller: emailController,
-                    validator: (value) {
-                      if (value == "") {
-                        return "Please enter a valid email";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 10),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: "Email"),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  color: const Color.fromARGB(255, 244, 244, 244),
-                  child: TextFormField(
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value == "") {
-                        return "Please enter a password";
-                      }
-                      return null;
-                    },
-                    obscureText: hidePassword,
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 10),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: "Password",
-                        suffix: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                hidePassword = !hidePassword;
-                              });
-                            },
-                            child: const Text("Show"))),
-                  ),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 30, 176, 61),
-                              foregroundColor: Colors.white,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10)),
-                          child: const Text(
-                            "Log In",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left:
+                                    27), //the padding on figma file cause an alignment problem with the rest of the form, so I increased it. Yet testing on different screen sizes/densities affected the alignment.
+                            // An approach which maintained alignment , that I used in the first push is covering everyhting with  padding. So irrespective of screen size, the alihnment is maintained.
+                            child: Text(
+                              textAlign: TextAlign.start,
+                              "Login to your account",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w600),
+                            ),
                           ),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              my_bloc.add(OnLoginEvent(
-                                  email: emailController.text,
-                                  password: passwordController.text));
-                              emailController.clear();
-                              passwordController.clear();
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        width: 343,
+                        color: const Color.fromARGB(255, 244, 244, 244),
+                        child: TextFormField(
+                          controller: emailController,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please enter a valid email";
                             }
-                          }),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Text(
-                  "Forgot your password",
-                  style: TextStyle(color: Color.fromARGB(255, 30, 176, 61)),
-                )
-              ]),
-            ),
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 16),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              hintText: "Email"),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: 343,
+                        color: const Color.fromARGB(255, 244, 244, 244),
+                        child: TextFormField(
+                          controller: passwordController,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Please enter a password";
+                            }
+                            return null;
+                          },
+                          obscureText: hidePassword,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 16),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              hintText: "Password",
+                              suffix: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      hidePassword = !hidePassword;
+                                    });
+                                  },
+                                  child: const Text(
+                                    "Show",
+                                    style: TextStyle(color: Color(0xFF5DB075)),
+                                  ))),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 343,
+                            height: 51,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF5DB075),
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10)),
+                                child: const Text(
+                                  "Log In",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    my_bloc.add(OnLoginEvent(
+                                        email: emailController.text,
+                                        password: passwordController.text));
+                                    emailController.clear();
+                                    passwordController.clear();
+                                  }
+                                }),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        "Forgot your password?",
+                        style: TextStyle(
+                            color: Color(0xFF5DB075),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      )
+                    ]),
+              ),
+            ],
           ),
         ),
       ),

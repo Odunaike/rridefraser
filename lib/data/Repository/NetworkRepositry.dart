@@ -15,7 +15,9 @@ class NetworkRepository {
         String token = bodyMap["token"] ?? "empty token";
         return token;
       } else if (networkResponse.statusCode == 404) {
-        throw "Email or Password incorrect";
+        throw "User not found. recheck email";
+      } else if (networkResponse.statusCode == 401) {
+        throw "Incorrect password";
       } else {
         throw "Server Error occured, try again";
       }
